@@ -25,4 +25,4 @@ runs:
       run: |
         yarn install --cwd example --frozen-lockfile
         yarn install --frozen-lockfile
-      shell: bash
+      shell: cmd
