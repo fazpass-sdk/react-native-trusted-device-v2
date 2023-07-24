@@ -11,11 +11,11 @@ npm install react-native-trusted-device-v2
 ## Usage
 
 ```js
-import { multiply } from 'react-native-trusted-device-v2';
+import Fazpass from 'react-native-trusted-device-v2';
 
 // ...
 
-const result = await multiply(3, 7);
+const meta = await Fazpass.instance.generateMeta();
 ```
 
 ## Contributing

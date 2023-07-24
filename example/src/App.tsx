@@ -1,13 +1,20 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-trusted-device-v2';
+import Fazpass, { SensitiveData } from 'react-native-trusted-device-v2';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
+
+  const publicKeyAssetName = "my_public_key.pub";
+  const enableFeatures = [SensitiveData.location, SensitiveData.simOperatorsAndNumbers]
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    Fazpass.instance.init(publicKeyAssetName).then((_) => {
+      Fazpass.instance.enableSelected(enableFeatures).then((_) => {
+        Fazpass.instance.generateMeta().then(setResult)
+      })
+    });
   }, []);
 
   return (

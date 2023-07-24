@@ -17,6 +17,27 @@ const TrustedDeviceV2 = NativeModules.TrustedDeviceV2
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return TrustedDeviceV2.multiply(a, b);
+export default class Fazpass {
+
+  private constructor() {}
+
+  static instance = new Fazpass();
+
+  init(assetName: string): Promise<any> {
+    return TrustedDeviceV2.init(assetName);
+  }
+  
+  generateMeta(): Promise<string> {
+    return TrustedDeviceV2.generateMeta();
+  }
+  
+  enableSelected(selected: Array<SensitiveData>): Promise<any> {
+    return TrustedDeviceV2.enableSelected(selected.map((v,_,__) => v.toString()))
+  }
+}
+
+export enum SensitiveData {
+  location,
+  vpn,
+  simOperatorsAndNumbers,
 }
