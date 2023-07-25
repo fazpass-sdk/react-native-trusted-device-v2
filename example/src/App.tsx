@@ -15,7 +15,7 @@ export default function App() {
         Fazpass.instance.generateMeta().then(setResult);
       });
     });
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
