@@ -18,13 +18,12 @@ const TrustedDeviceV2 = NativeModules.TrustedDeviceV2
     );
 
 export default class Fazpass {
-
   private constructor() {}
 
   static instance = new Fazpass();
 
   init(assetName: string): Promise<any> {
-    return TrustedDeviceV2.init(assetName);
+    return TrustedDeviceV2.initz(assetName);
   }
   
   generateMeta(): Promise<string> {
