@@ -73,9 +73,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.trusteddevicev2example"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    namespace "com.fazpass.tdv2_showcase_mobile"
     defaultConfig {
-        applicationId "com.trusteddevicev2example"
+        applicationId "com.fazpass.tdv2_showcase_mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

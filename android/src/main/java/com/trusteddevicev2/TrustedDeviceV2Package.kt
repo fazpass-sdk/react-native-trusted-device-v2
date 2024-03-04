@@ -8,7 +8,7 @@ import com.facebook.react.uimanager.ViewManager
 
 class TrustedDeviceV2Package : ReactPackage {
   override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-    return listOf(TrustedDeviceV2Module(reactContext))
+    return listOf(TrustedDeviceV2Module(reactContext), CrossDeviceModule(reactContext))
   }
 
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {

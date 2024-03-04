@@ -1,4 +1,9 @@
 import { NativeModules, Platform } from 'react-native';
+import { SensitiveData } from './sensitive-data';
+import type ReactNativeTrustedDevice from './react-native-trusted-device';
+import FazpassSettings, { FazpassSettingsBuilder } from './fazpass-settings';
+import CrossDeviceRequestStream from './cross-device-request-stream';
+import CrossDeviceRequest from './cross-device-request';
 
 const LINKING_ERROR =
   `The package 'react-native-trusted-device-v2' doesn't seem to be linked. Make sure: \n\n` +
@@ -17,26 +22,58 @@ const TrustedDeviceV2 = NativeModules.TrustedDeviceV2
       }
     );
 
-export default class Fazpass {
-  private constructor() {}
+const CrossDevice = NativeModules.CrossDevice
+  ? NativeModules.CrossDevice
+  : new Proxy(
+    {},
+    {
+      get() {
+        throw new Error(LINKING_ERROR);
+      },
+    }
+  );
 
+export default class Fazpass implements ReactNativeTrustedDevice {
+  
   static instance = new Fazpass();
 
-  init(assetName: string): Promise<any> {
-    return TrustedDeviceV2.initz(assetName);
+  #getCrossDeviceRequestStream: CrossDeviceRequestStream
+
+  private constructor() {
+    this.#getCrossDeviceRequestStream = new CrossDeviceRequestStream(CrossDevice);
   }
-  
-  generateMeta(): Promise<string> {
-    return TrustedDeviceV2.generateMeta();
+
+  init(androidAssetName?: string, iosAssetName?: string, iosFcmAppId?: string): Promise<any> {
+    return TrustedDeviceV2.initz(androidAssetName, iosAssetName, iosFcmAppId);
   }
-  
-  enableSelected(selected: Array<SensitiveData>): Promise<any> {
-    return TrustedDeviceV2.enableSelected(selected.map((v,_,__) => v.toString()))
+
+  generateMeta(accountIndex: number = -1): Promise<string> {
+    return TrustedDeviceV2.generateMeta(accountIndex);
+  }
+
+  generateNewSecretKey(): Promise<void> {
+    return TrustedDeviceV2.generateNewSecretKey();
+  }
+
+  setSettings(accountIndex: number, settings?: FazpassSettings | undefined): Promise<void> {
+    return TrustedDeviceV2.setSettings(accountIndex, settings?.toString());
+  }
+
+  async getSettings(accountIndex: number): Promise<FazpassSettings | undefined> {
+    const settingsString = await (TrustedDeviceV2.getSettings(accountIndex) as Promise<string | undefined>);
+    return settingsString ? FazpassSettings.fromString(settingsString) : undefined;
+  }
+
+  getCrossDeviceRequestStreamInstance(): CrossDeviceRequestStream {
+    return this.#getCrossDeviceRequestStream;
+  }
+
+  getCrossDeviceRequestFromNotification(): Promise<CrossDeviceRequest | undefined> {
+    return TrustedDeviceV2.getCrossDeviceRequestFromNotification();
   }
 }
 
-export enum SensitiveData {
-  location,
-  vpn,
-  simOperatorsAndNumbers,
-}
+export { SensitiveData }
+export { FazpassSettings, FazpassSettingsBuilder }
+export { CrossDeviceRequest }
+export { CrossDeviceRequestStream }

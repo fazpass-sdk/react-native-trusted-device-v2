@@ -1,4 +1,4 @@
-package com.trusteddevicev2example;
+package com.fazpass.tdv2_showcase_mobile;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
