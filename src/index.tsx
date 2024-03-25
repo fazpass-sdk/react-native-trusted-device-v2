@@ -37,14 +37,18 @@ export default class Fazpass implements ReactNativeTrustedDevice {
   
   static instance = new Fazpass();
 
-  #getCrossDeviceRequestStream: CrossDeviceRequestStream
+  #getCrossDeviceRequestStream: CrossDeviceRequestStream;
 
   private constructor() {
     this.#getCrossDeviceRequestStream = new CrossDeviceRequestStream(CrossDevice);
   }
 
   init(androidAssetName?: string, iosAssetName?: string, iosFcmAppId?: string): Promise<any> {
-    return TrustedDeviceV2.initz(androidAssetName, iosAssetName, iosFcmAppId);
+    if (Platform.OS === "android") {
+      return TrustedDeviceV2.initz(androidAssetName);
+    }
+
+    return TrustedDeviceV2.initz(iosAssetName, iosFcmAppId);
   }
 
   generateMeta(accountIndex: number = -1): Promise<string> {

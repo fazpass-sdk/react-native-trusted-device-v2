@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0B8286E2BB168AF0073687E /* CrossDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = B0B8286B2BB168AF0073687E /* CrossDevice.mm */; };
+		B0B8286F2BB168AF0073687E /* CrossDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B8286D2BB168AF0073687E /* CrossDevice.swift */; };
 		F4FF95D7245B92E800C19C63 /* TrustedDeviceV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* TrustedDeviceV2.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +26,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libTrustedDeviceV2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTrustedDeviceV2.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B8286B2BB168AF0073687E /* CrossDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossDevice.mm; sourceTree = "<group>"; };
+		B0B8286C2BB168AF0073687E /* CrossDevice-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossDevice-Bridging-Header.h"; sourceTree = "<group>"; };
+		B0B8286D2BB168AF0073687E /* CrossDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossDevice.swift; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* TrustedDeviceV2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrustedDeviceV2.mm; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* TrustedDeviceV2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrustedDeviceV2-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4FF95D6245B92E800C19C63 /* TrustedDeviceV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustedDeviceV2.swift; sourceTree = "<group>"; };
@@ -51,6 +56,9 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				B0B8286C2BB168AF0073687E /* CrossDevice-Bridging-Header.h */,
+				B0B8286B2BB168AF0073687E /* CrossDevice.mm */,
+				B0B8286D2BB168AF0073687E /* CrossDevice.swift */,
 				F4FF95D6245B92E800C19C63 /* TrustedDeviceV2.swift */,
 				B3E7B5891CC2AC0600A0062D /* TrustedDeviceV2.mm */,
 				F4FF95D5245B92E700C19C63 /* TrustedDeviceV2-Bridging-Header.h */,
@@ -119,6 +127,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B8286E2BB168AF0073687E /* CrossDevice.mm in Sources */,
+				B0B8286F2BB168AF0073687E /* CrossDevice.swift in Sources */,
 				F4FF95D7245B92E800C19C63 /* TrustedDeviceV2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

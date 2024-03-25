@@ -21,7 +21,7 @@ class TrustedDeviceV2Module(reactContext: ReactApplicationContext) :
   override fun getName(): String = NAME
 
   @ReactMethod
-  fun initz(androidAssetName: String, iosAssetName: String, iosFcmAppId: String, promise: Promise) {
+  fun initz(androidAssetName: String, promise: Promise) {
     Fazpass.instance.init(reactApplicationContext.applicationContext, androidAssetName);
     promise.resolve(null)
   }
