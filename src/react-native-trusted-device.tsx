@@ -19,6 +19,13 @@ export default interface ReactNativeTrustedDevice {
   init(androidAssetName?: string, iosAssetName?: string, iosFcmAppId?: string): Promise<any>;
   
   /**
+   * Retrieves application signatures.
+   * 
+   * Only works in android. Will return empty list in iOS.
+   */
+  getAppSignatures(): Promise<Array<string> | undefined>;
+  
+  /**
    * Collects specific data according to settings and generate meta from it as Base64 string.
    *
    * You can use this meta to hit Fazpass API endpoint. Calling this method will automatically launch
