@@ -1,4 +1,4 @@
-# react-native-trusted-device-v2
+# flutter_trusted_device_v2
 
 This is the Official flutter package for Fazpass Trusted Device V2.
 If you want to use native sdk for android, you can find it here: https://github.com/fazpass-sdk/android-trusted-device-v2 <br>
