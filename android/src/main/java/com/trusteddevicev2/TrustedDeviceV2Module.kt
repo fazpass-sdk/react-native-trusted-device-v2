@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.UiThreadUtil
+import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import com.fazpass.android_trusted_device_v2.Fazpass
 import com.fazpass.android_trusted_device_v2.`object`.CrossDeviceRequest
@@ -76,6 +77,20 @@ class TrustedDeviceV2Module(reactContext: ReactApplicationContext) :
     val request = Fazpass.instance.getCrossDeviceRequestFromNotification(activity.intent)
     val mapper = if (request != null) crossDeviceRequestToMap(request) else null
     promise.resolve(mapper)
+  }
+
+  @ReactMethod
+  fun getAppSignatures(promise: Promise) {
+    val activity = reactApplicationContext.currentActivity
+    if (activity == null) {
+      promise.reject(NullPointerException("Activity not found!"))
+      return
+    }
+
+    val signatures = Fazpass.helper.getAppSignatures(activity)
+    val array = Arguments.createArray()
+    signatures.forEach { item -> array.pushString(item) }
+    promise.resolve(array)
   }
 
   private fun crossDeviceRequestToMap(request: CrossDeviceRequest): WritableMap {

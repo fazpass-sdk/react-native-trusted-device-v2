@@ -1,4 +1,4 @@
-import { NativeModules, Platform } from 'react-native';
+import { FlatList, NativeModules, Platform } from 'react-native';
 import { SensitiveData } from './sensitive-data';
 import type ReactNativeTrustedDevice from './react-native-trusted-device';
 import FazpassSettings, { FazpassSettingsBuilder } from './fazpass-settings';
@@ -75,6 +75,14 @@ export default class Fazpass implements ReactNativeTrustedDevice {
   getCrossDeviceRequestFromNotification(): Promise<CrossDeviceRequest | undefined> {
     return TrustedDeviceV2.getCrossDeviceRequestFromNotification();
   }
+
+  async getAppSignatures(): Promise<Array<string> | undefined> {
+    if (Platform.OS === "android") {
+      return await TrustedDeviceV2.getAppSignatures();
+    }
+
+    return undefined
+  } 
 }
 
 export { SensitiveData }
