@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text, FlatList, Button, Dimensions } from 'react-native';
-import Fazpass, { CrossDeviceRequest, FazpassSettings, FazpassSettingsBuilder, SensitiveData } from 'react-native-trusted-device-v2';
+import Fazpass, { CrossDeviceRequest, SensitiveData } from 'react-native-trusted-device-v2';
 import { Data } from './Data';
 import type { LocalSettings } from './LocalSettings';
 import SettingsModal from './widget/SettingsModal';

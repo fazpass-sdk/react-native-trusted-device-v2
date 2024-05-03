@@ -1,4 +1,4 @@
-import { FlatList, NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { SensitiveData } from './sensitive-data';
 import type ReactNativeTrustedDevice from './react-native-trusted-device';
 import FazpassSettings, { FazpassSettingsBuilder } from './fazpass-settings';

@@ -3,6 +3,7 @@
 This is the Official react native package for Fazpass Trusted Device V2.
 If you want to use native sdk for android, you can find it here: https://github.com/fazpass-sdk/android-trusted-device-v2 <br>
 For ios counterpart, you can find it here: https://github.com/fazpass-sdk/ios-trusted-device-v2 <br>
+You can also find this package at npm npmjs.com here: https://www.npmjs.com/package/react-native-trusted-device-v2 <br>
 Visit [official website](https://fazpass.com) for more information about the product and see documentation at [online documentation](https://doc.fazpass.com) for more technical details.
 
 ## Minimum OS
