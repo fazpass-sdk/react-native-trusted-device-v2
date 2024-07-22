@@ -1,6 +1,5 @@
 package com.trusteddevicev2
 
-import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -8,8 +7,7 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.fazpass.android_trusted_device_v2.Fazpass
-import com.fazpass.android_trusted_device_v2.`object`.CrossDeviceRequest
-import com.fazpass.android_trusted_device_v2.`object`.CrossDeviceRequestStream
+import com.fazpass.android_trusted_device_v2.`object`.CrossDeviceDataStream
 
 class CrossDeviceModule(reactContext: ReactApplicationContext): ReactContextBaseJavaModule(reactContext) {
 
@@ -19,8 +17,8 @@ class CrossDeviceModule(reactContext: ReactApplicationContext): ReactContextBase
 
   override fun getName(): String = NAME
 
-  private val streamInstance: CrossDeviceRequestStream =
-    Fazpass.instance.getCrossDeviceRequestStreamInstance(reactApplicationContext.applicationContext)
+  private val streamInstance: CrossDeviceDataStream =
+    Fazpass.instance.getCrossDeviceDataStreamInstance(reactApplicationContext.applicationContext)
 
   private var listenerCount = 0
 
@@ -35,7 +33,7 @@ class CrossDeviceModule(reactContext: ReactApplicationContext): ReactContextBase
     if (listenerCount == 0) {
       // Set up any upstream listeners or background tasks as necessary
       streamInstance.listen {
-        sendEvent(reactApplicationContext, eventName, crossDeviceRequestToMap(it))
+        sendEvent(reactApplicationContext, eventName, CrossDeviceDataMapper(it).value)
       }
     }
 
@@ -47,17 +45,6 @@ class CrossDeviceModule(reactContext: ReactApplicationContext): ReactContextBase
     listenerCount -= count
     if (listenerCount == 0) {
       streamInstance.close()
-    }
-  }
-
-  private fun crossDeviceRequestToMap(request: CrossDeviceRequest): WritableMap {
-    return Arguments.createMap().apply {
-      putString("merchant_app_id", request.merchantAppId)
-      putString("expired", request.expired.toString())
-      putString("device_request", request.deviceRequest)
-      putString("device_receive", request.deviceReceive)
-      putString("device_id_request", request.deviceIdRequest)
-      putString("device_id_receive", request.deviceIdReceive)
     }
   }
 }

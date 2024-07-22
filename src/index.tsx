@@ -2,8 +2,8 @@ import { NativeModules, Platform } from 'react-native';
 import { SensitiveData } from './sensitive-data';
 import type ReactNativeTrustedDevice from './react-native-trusted-device';
 import FazpassSettings, { FazpassSettingsBuilder } from './fazpass-settings';
-import CrossDeviceRequestStream from './cross-device-request-stream';
-import CrossDeviceRequest from './cross-device-request';
+import CrossDeviceDataStream from './cross-device-data-stream';
+import CrossDeviceData from './cross-device-data';
 
 const LINKING_ERROR =
   `The package 'react-native-trusted-device-v2' doesn't seem to be linked. Make sure: \n\n` +
@@ -37,10 +37,10 @@ export default class Fazpass implements ReactNativeTrustedDevice {
   
   static instance = new Fazpass();
 
-  #getCrossDeviceRequestStream: CrossDeviceRequestStream;
+  #getCrossDeviceDataStream: CrossDeviceDataStream;
 
   private constructor() {
-    this.#getCrossDeviceRequestStream = new CrossDeviceRequestStream(CrossDevice);
+    this.#getCrossDeviceDataStream = new CrossDeviceDataStream(CrossDevice);
   }
 
   init(androidAssetName?: string, iosAssetName?: string, iosFcmAppId?: string): Promise<any> {
@@ -68,12 +68,13 @@ export default class Fazpass implements ReactNativeTrustedDevice {
     return settingsString ? FazpassSettings.fromString(settingsString) : undefined;
   }
 
-  getCrossDeviceRequestStreamInstance(): CrossDeviceRequestStream {
-    return this.#getCrossDeviceRequestStream;
+  getCrossDeviceDataStreamInstance(): CrossDeviceDataStream {
+    return this.#getCrossDeviceDataStream;
   }
 
-  getCrossDeviceRequestFromNotification(): Promise<CrossDeviceRequest | undefined> {
-    return TrustedDeviceV2.getCrossDeviceRequestFromNotification();
+  async getCrossDeviceDataFromNotification(): Promise<CrossDeviceData | undefined> {
+    const data = await (TrustedDeviceV2.getCrossDeviceRequestFromNotification() as Promise<any>);
+    return new CrossDeviceData(data);
   }
 
   async getAppSignatures(): Promise<Array<string> | undefined> {
@@ -87,5 +88,5 @@ export default class Fazpass implements ReactNativeTrustedDevice {
 
 export { SensitiveData }
 export { FazpassSettings, FazpassSettingsBuilder }
-export { CrossDeviceRequest }
-export { CrossDeviceRequestStream }
+export { CrossDeviceData }
+export { CrossDeviceDataStream }

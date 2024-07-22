@@ -28,10 +28,10 @@ export default function App() {
   const challenge = React.useRef('')
   const fazpassId = React.useRef('')
 
-  const crossDeviceStream = React.useRef(Fazpass.instance.getCrossDeviceRequestStreamInstance())
+  const crossDeviceStream = React.useRef(Fazpass.instance.getCrossDeviceDataStreamInstance())
   const setLoggedIn = (loggedIn: boolean) => {
     if (loggedIn) {
-      Fazpass.instance.getCrossDeviceRequestFromNotification().then((request) => {
+      Fazpass.instance.getCrossDeviceDataFromNotification().then((request) => {
         if (request) {
           setCrossDeviceRequest(request)
         }

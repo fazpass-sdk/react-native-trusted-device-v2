@@ -75,7 +75,7 @@ Then, in your AppDelegate.swift file in your XCode project, override your `didRe
 override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
   
   // add this line
-  Fazpass.shared.getCrossDeviceRequestFromNotification(userInfo: userInfo)
+  Fazpass.shared.getCrossDeviceDataFromNotification(userInfo: userInfo)
 
   completionHandler(UIBackgroundFetchResult.newData)
 }
@@ -253,30 +253,38 @@ When secret key has been invalidated, trying to hit Fazpass Check API will fail.
 to sign out every account that has enabled high-level biometric and make them sign in again with low-level biometric settings.
 If you want to re-enable high-level biometrics after the secret key has been invalidated, make sure to call `generateNewSecretKey()` once again.
 
-## Handle incoming Cross Device Request notification
+## Handle incoming Cross Device Data notification
 
-When application is in background state (not running), incoming cross device request will enter your system notification tray
-and shows them as a notification. Pressing said notification will launch the application with cross device request data as an argument.
-When application is in foreground state (currently running), incoming cross device request will immediately sent into the application without showing any notification.
+When application is in background state (not running), incoming cross device data will enter your system notification tray
+and shows them as a notification. Pressing said notification will launch the application with cross device data as an argument.
+When application is in foreground state (currently running), incoming cross device data will immediately sent into the application without showing any notification.
 
-To retrieve cross device request when app is in background state, you have to call `getCrossDeviceRequestFromNotification()` method.
+To retrieve cross device data when app is in background state, you have to call `getCrossDeviceDataFromNotification()` method.
 
 ```js
-let request = await Fazpass.instance.getCrossDeviceRequestFromNotification();
+let data = await Fazpass.instance.getCrossDeviceDataFromNotification();
 ```
 
-To retrieve cross device request when app is in foreground state, you have to get the stream instance by calling `getCrossDeviceRequestStreamInstance()` then start listening to the stream.
+To retrieve cross device data when app is in foreground state, you have to get the stream instance by calling `getCrossDeviceDataStreamInstance()` then start listening to the stream.
 
 ```js
 // get the stream instance
-let requestStream = Fazpass.instance.getCrossDeviceRequestStreamInstance();
+let crossDeviceStream = Fazpass.instance.getCrossDeviceDataStreamInstance();
 
 // start listening to the stream
-requestStream.listen((request) => {
+crossDeviceStream.listen((data) => {
   // called everytime there is an incoming cross device request notification
-  print(request);
+  print(data);
+
+  if (data.status === "request") {
+    let notificationId = data.notificationId!;
+    print(notificationId);
+  } else if (data.status === "validate") {
+    let action = data.action!;
+    print(action);
+  }
 });
 
 // stop listening to the stream
-requestStream.close();
+crossDeviceStream.close();
 ```

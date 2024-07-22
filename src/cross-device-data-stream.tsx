@@ -1,15 +1,15 @@
 import { NativeEventEmitter, type EmitterSubscription } from "react-native";
-import CrossDeviceRequest from "./cross-device-request";
+import CrossDeviceData from "./cross-device-data";
 import Fazpass from "react-native-trusted-device-v2";
 
 /**
- * An instance acquired from {@link Fazpass.getCrossDeviceRequestStreamInstance()} to start listening for
+ * An instance acquired from {@link Fazpass.getCrossDeviceDataStreamInstance()} to start listening for
  * incoming cross device request notification.
  *
  * call `listen` method to start listening, and call `close` to stop.
  */
-export default class CrossDeviceRequestStream {
-    private static eventType = 'react_trusted_device_v2_cd_request';
+export default class CrossDeviceDataStream {
+    private static eventType = 'react_trusted_device_v2_cd_event';
 
     #emitter: NativeEventEmitter;
     #listener: EmitterSubscription | undefined;
@@ -18,12 +18,12 @@ export default class CrossDeviceRequestStream {
         this.#emitter = new NativeEventEmitter(module);
     }
 
-    listen(callback: (request: CrossDeviceRequest) => void) {
+    listen(callback: (request: CrossDeviceData) => void) {
         if (this.#listener !== undefined) {
             this.close()
         }
-        this.#listener = this.#emitter.addListener(CrossDeviceRequestStream.eventType, (event) => {
-            const data = new CrossDeviceRequest(event as Map<string, string>)
+        this.#listener = this.#emitter.addListener(CrossDeviceDataStream.eventType, (event) => {
+            const data = new CrossDeviceData(event)
             callback(data)
         });
     }

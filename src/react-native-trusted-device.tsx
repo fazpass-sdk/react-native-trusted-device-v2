@@ -1,4 +1,4 @@
-import Fazpass, {CrossDeviceRequest, CrossDeviceRequestStream, FazpassSettings} from "react-native-trusted-device-v2";
+import Fazpass, {CrossDeviceData, CrossDeviceDataStream, FazpassSettings} from "react-native-trusted-device-v2";
 
 export default interface ReactNativeTrustedDevice {
   
@@ -70,22 +70,16 @@ export default interface ReactNativeTrustedDevice {
   getSettings(accountIndex: number): Promise<FazpassSettings | undefined>;
 
   /**
-   * Retrieves the stream instance of cross device request.
-   *
-   * Before you listen to cross device login request stream, make sure these requirements
-   * have been met:
-   * - Device has been enrolled.
-   * - Device is currently trusted (See Fazpass documentation for the definition of "trusted").
-   * - Application is in "Logged In" state.
+   * Retrieves the stream instance of cross device notification data.
    */
-  getCrossDeviceRequestStreamInstance(): CrossDeviceRequestStream;
+  getCrossDeviceDataStreamInstance(): CrossDeviceDataStream;
 
   /**
-   * Retrieves a {@link CrossDeviceRequest} object obtained from notification.
+   * Retrieves a {@link CrossDeviceData} object obtained from notification.
    *
    * If user launched the application from notification, this method will return data
-   * contained in that notification. Will return null if user launched the application
+   * contained in that notification. Will return undefined if user launched the application
    * normally.
    */
-  getCrossDeviceRequestFromNotification(): Promise<CrossDeviceRequest | undefined>;
+  getCrossDeviceDataFromNotification(): Promise<CrossDeviceData | undefined>;
 }

@@ -6,10 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.UiThreadUtil
-import com.facebook.react.bridge.WritableArray
-import com.facebook.react.bridge.WritableMap
 import com.fazpass.android_trusted_device_v2.Fazpass
-import com.fazpass.android_trusted_device_v2.`object`.CrossDeviceRequest
 import com.fazpass.android_trusted_device_v2.`object`.FazpassSettings
 
 class TrustedDeviceV2Module(reactContext: ReactApplicationContext) :
@@ -67,16 +64,16 @@ class TrustedDeviceV2Module(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun getCrossDeviceRequestFromNotification(promise: Promise) {
+  fun getCrossDeviceDataFromNotification(promise: Promise) {
     val activity = reactApplicationContext.currentActivity
     if (activity == null) {
       promise.reject(NullPointerException("Activity not found!"))
       return
     }
 
-    val request = Fazpass.instance.getCrossDeviceRequestFromNotification(activity.intent)
-    val mapper = if (request != null) crossDeviceRequestToMap(request) else null
-    promise.resolve(mapper)
+    val data = Fazpass.instance.getCrossDeviceDataFromNotification(activity.intent)
+    val map = if (data != null) CrossDeviceDataMapper(data).value else null
+    promise.resolve(map)
   }
 
   @ReactMethod
@@ -91,16 +88,5 @@ class TrustedDeviceV2Module(reactContext: ReactApplicationContext) :
     val array = Arguments.createArray()
     signatures.forEach { item -> array.pushString(item) }
     promise.resolve(array)
-  }
-
-  private fun crossDeviceRequestToMap(request: CrossDeviceRequest): WritableMap {
-    return Arguments.createMap().apply {
-      putString("merchant_app_id", request.merchantAppId)
-      putString("expired", request.expired.toString())
-      putString("device_request", request.deviceRequest)
-      putString("device_receive", request.deviceReceive)
-      putString("device_id_request", request.deviceIdRequest)
-      putString("device_id_receive", request.deviceIdReceive)
-    }
   }
 }
