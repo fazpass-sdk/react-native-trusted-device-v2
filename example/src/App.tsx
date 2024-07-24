@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text, FlatList, Button, Dimensions } from 'react-native';
-import Fazpass, { CrossDeviceRequest, SensitiveData } from 'react-native-trusted-device-v2';
+import Fazpass, { CrossDeviceData, SensitiveData } from 'react-native-trusted-device-v2';
 import { Data } from './Data';
 import type { LocalSettings } from './LocalSettings';
 import SettingsModal from './widget/SettingsModal';
@@ -12,7 +12,7 @@ export default function App() {
 
   const [data, setData] = React.useState<Data[]>([]);
   const [settingsModalVis, setSettingsModalVis] = React.useState<boolean>(false);
-  const [crossDeviceRequest, setCrossDeviceRequest] = React.useState<CrossDeviceRequest>();
+  const [crossDeviceRequest, setCrossDeviceRequest] = React.useState<CrossDeviceData>();
   const [settings, setSettings] = React.useState<LocalSettings>({
     location: false,
     vpn: false,

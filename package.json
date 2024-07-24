@@ -1,6 +1,6 @@
 {
   "name": "react-native-trusted-device-v2",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Trusted device for react native",
   "main": "lib\\commonjs\\index.js",
   "module": "lib\\module\\index.js",

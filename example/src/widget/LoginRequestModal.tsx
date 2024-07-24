@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { View, Button, Modal, StyleSheet, Text } from 'react-native';
-import { CrossDeviceRequest } from 'react-native-trusted-device-v2';
+import { CrossDeviceData } from 'react-native-trusted-device-v2';
 
 type Props = {
-  request: CrossDeviceRequest | undefined
+  request: CrossDeviceData | undefined
   onDecline: () => void
   onAccept: () => void
 }
