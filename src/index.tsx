@@ -74,7 +74,7 @@ export default class Fazpass implements ReactNativeTrustedDevice {
 
   async getCrossDeviceDataFromNotification(): Promise<CrossDeviceData | undefined> {
     const data = await (TrustedDeviceV2.getCrossDeviceRequestFromNotification() as Promise<any>);
-    return new CrossDeviceData(data);
+    return data ? new CrossDeviceData(data) : undefined;
   }
 
   async getAppSignatures(): Promise<Array<string> | undefined> {

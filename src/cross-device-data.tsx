@@ -1,7 +1,7 @@
 import Fazpass from "react-native-trusted-device-v2";
 
 /**
- * An object containing data from cross device notification request.
+ * An object containing data from cross device notification data.
  *
  * This object is only used as data retrieved from {@link Fazpass.getCrossDeviceDataStreamInstance()}
  * and {@link Fazpass.getCrossDeviceDataFromNotification()}.
@@ -14,8 +14,8 @@ export default class CrossDeviceData {
     readonly deviceIdRequest : string;
     readonly expired : string;
     readonly status : string;
-    readonly notificationId: string | undefined;
-    readonly action: string | undefined;
+    readonly notificationId: string | null;
+    readonly action: string | null;
 
     constructor(data: any) {
         this.merchantAppId = data["merchant_app_id"] as string;
@@ -25,7 +25,7 @@ export default class CrossDeviceData {
         this.deviceIdRequest = data["device_id_request"] as string;
         this.expired = data["expired"] as string;
         this.status = data["status"] as string;
-        this.notificationId = data["notification_id"] as string | undefined;
-        this.action = data["action"] as string | undefined;
+        this.notificationId = data["notification_id"] as string | null;
+        this.action = data["action"] as string | null;
     }
 }

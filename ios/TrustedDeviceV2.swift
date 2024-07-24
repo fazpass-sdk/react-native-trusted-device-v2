@@ -65,23 +65,9 @@ class TrustedDeviceV2: NSObject {
         resolve(settings?.toString())
     }
     
-    @objc(getCrossDeviceRequestFromNotification:)
-    func getCrossDeviceRequestFromNotification(resolve: RCTPromiseResolveBlock) {
-        let request = Fazpass.shared.getCrossDeviceRequestFromNotification(userInfo: nil)
-        resolve(request?.toNSDict())
-    }
-}
-
-private extension CrossDeviceRequest {
-    
-    func toNSDict() -> NSDictionary {
-        return [
-            "merchantAppId" as NSString: self.merchantAppId as NSString,
-            "expired" as NSString: self.expired as NSNumber,
-            "deviceRequest" as NSString: self.deviceRequest as NSString,
-            "deviceReceive" as NSString: self.deviceReceive as NSString,
-            "deviceIdRequest" as NSString: self.deviceIdRequest as NSString,
-            "deviceIdReceive" as NSString: self.deviceIdReceive as NSString
-        ]
+    @objc(getCrossDeviceDataFromNotification:)
+    func getCrossDeviceDataFromNotification(resolve: RCTPromiseResolveBlock) {
+        let data = Fazpass.shared.getCrossDeviceDataFromNotification(userInfo: nil)
+        resolve(data?.toNSDict())
     }
 }

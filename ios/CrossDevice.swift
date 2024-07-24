@@ -6,13 +6,13 @@ import ios_trusted_device_v2
 open class CrossDevice: RCTEventEmitter {
 
     var hasListener: Bool = false
-    let stream: CrossDeviceRequestStream = Fazpass.shared.getCrossDeviceRequestStreamInstance()
+    let stream = Fazpass.shared.getCrossDeviceDataStreamInstance()
 
     open override func startObserving() {
         hasListener = true
         if (hasListener) {
-            stream.listen { request in
-                self.sendEvent(withName:"react_trusted_device_v2_cd_request", body:request.toNSDict())
+            stream.listen { data in
+                self.sendEvent(withName:"react_trusted_device_v2_cd_event", body:data.toNSDict())
             }
         }
     }
@@ -24,21 +24,24 @@ open class CrossDevice: RCTEventEmitter {
 
     @objc
     open override func supportedEvents() -> [String]! {
-        return ["react_trusted_device_v2_cd_request"];
+        return ["react_trusted_device_v2_cd_event"];
     }
 
 }
 
-private extension CrossDeviceRequest {
+extension CrossDeviceData {
     
     func toNSDict() -> NSDictionary {
         return [
-            "merchantAppId" as NSString: self.merchantAppId as NSString,
-            "expired" as NSString: self.expired as NSNumber,
-            "deviceRequest" as NSString: self.deviceRequest as NSString,
-            "deviceReceive" as NSString: self.deviceReceive as NSString,
-            "deviceIdRequest" as NSString: self.deviceIdRequest as NSString,
-            "deviceIdReceive" as NSString: self.deviceIdReceive as NSString
+            "merchant_app_id" as NSString: self.merchantAppId as NSString,
+            "device_receive" as NSString: self.deviceReceive as NSString,
+            "device_request" as NSString: self.deviceRequest as NSString,
+            "device_id_receive" as NSString: self.deviceIdReceive as NSString,
+            "device_id_request" as NSString: self.deviceIdRequest as NSString,
+            "expired" as NSString: self.expired as NSString,
+            "status" as NSString: self.status as NSString,
+            "notification_id" as NSString: self.notificationId as NSString? ?? NSNull(),
+            "action" as NSString: self.action as NSString? ?? NSNull()
         ]
     }
 }

@@ -20,7 +20,7 @@ RCT_EXTERN_METHOD(setSettings:(NSNumber)accountIndex
 RCT_EXTERN_METHOD(getSettings:(NSNumber)accountIndex
                   withResolver:(RCTPromiseResolveBlock)resolve)
 
-RCT_EXTERN_METHOD(getCrossDeviceRequestFromNotification:(RCTPromiseResolveBlock)resolve)
+RCT_EXTERN_METHOD(getCrossDeviceDataFromNotification:(RCTPromiseResolveBlock)resolve)
 
 + (BOOL)requiresMainQueueSetup
 {
